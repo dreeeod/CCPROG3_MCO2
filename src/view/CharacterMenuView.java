@@ -29,5 +29,4 @@ public class CharacterMenuView extends VBox {
     public Button getModifyButton() { return modifyButton; }
     public Button getDeleteButton() { return deleteButton; }
     public Button getBackButton() { return backButton; }
-
 }

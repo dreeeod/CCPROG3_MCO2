@@ -28,18 +28,28 @@ public class Main extends Application {
         setRoot(view);
     }
 
+    // CHARACTER MENUS
     public void showCharacterMenu() {
         CharacterMenuView view = new CharacterMenuView();
         new CharacterMenuController(view, this);
         setRoot(view);
     }
+    public void showCharacterCreateMenu() {
+        CharacterCreateMenuView view = new CharacterCreateMenuView();
+        new CharacterCreateController(view, this);
+        setRoot(view);
+    }
 
+
+
+    // GROUP MENUS
     public void showGroupMenu() {
         GroupMenuView view = new GroupMenuView();
         new GroupMenuController(view, this);
         setRoot(view);
     }
 
+    // DEVIL FRUIT MENUS
     public void showDevilFruitMenu() {
         DevilFruitMenuView view = new DevilFruitMenuView();
         new DevilFruitMenuController(view, this);

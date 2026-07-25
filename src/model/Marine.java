@@ -1,0 +1,131 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Marine extends Character{
+
+    private String rank;
+    private MarineCorps corps;
+
+    /**
+     * First constructor method for Marine class with input parameters
+     * @param id Is the value to be assigned to characterID attribute in the super class
+     * @param name Is the value to be assigned to name attribute in the super class
+     * @param alias Is the value to be assigned to alias attribute in the super class
+     * @param origin Is the value to be assigned to origin attribute in the super class
+     * @param status Is the value to be assigned to status attribute in the super class
+     * @param wallet Is the value to be assigned to wallet attribute in the super class
+     * @param rank Is the value to be assigned to rank attribute
+     * @param corps Is the value to be assigned to corps attribute
+     */
+    public Marine (int id, String name, String alias, String origin, String status, double wallet, String rank, MarineCorps corps) {
+        super(id, name, alias, origin, status, wallet);
+        this.rank = rank;
+        this.corps = corps;
+    }
+
+    /**
+     * Second constructor method for Marine class with no input parameters
+     */
+    public Marine () {
+        super();
+        this.rank = "Unknown";
+        this.corps = null;
+    }
+
+    /**
+     * Reassigns the rank of the Marine object that calls this method
+     * @param scanner Passed created Scanner object from main for input
+     */
+    public void promoteRank(Scanner scanner) {
+        ArrayList<Integer> range = new ArrayList<>();
+        int choice = 0;
+        String[] ranks = {"Fleet Admiral", "Admiral", "Vice-Admiral", "Rear Admiral", "Commodore", "Captain",
+                "Commander", "Ensign", "Warrant Officer", "Petty Officer", "Seaman", "Chore Boy"};
+
+        System.out.println(" --- Marine Rank Promotion --- ");
+        System.out.println("To what position will the Marine get promoted to?");
+        for (int i = 0; i < ranks.length; i++) {
+            System.out.println(i + " | " + ranks[i]);
+            range.add(i);
+        }
+        //choice = Helpers.validateInput(scanner, range);
+
+        int newInd = Arrays.asList(ranks).indexOf(ranks[choice]);
+        int oldInd = Arrays.asList(ranks).indexOf(this.rank);
+        while (newInd >= oldInd) { // a higher index means a lower rank, this method only allows promotion (meaning going up a rank)
+            if (newInd == oldInd) {
+                System.out.println("\nMarine " + this.getName() + " is already of rank " + this.rank + ". Please try again!");
+                //choice = Helpers.validateInput(scanner, range);
+                newInd = Arrays.asList(ranks).indexOf(ranks[choice]);
+            }
+            else if (newInd > oldInd) {
+                System.out.println("\nMarine " + this.getName() + " cannot go down a rank! Please try again!");
+                //choice = Helpers.validateInput(scanner, range);
+                newInd = Arrays.asList(ranks).indexOf(ranks[choice]);
+            }
+        }
+
+        System.out.println("\nMarine " + this.getName() + " has successfully been promoted to the rank of '" + ranks[choice] + "'!\n");
+        this.rank = ranks[choice];
+
+    }
+
+    /**
+     * Assigns the Marine object that calls this method to an EXISTING MarineCorps object
+     * A MarineCorps object exists if it is present in the past List of MarineCorps
+     * @param corps Is the MarineCorps object to be assigned as this Marine object's MarineCorps
+     */
+    public void assignMarineCorps(MarineCorps corps) {
+        if (this.corps == null) {
+            corps.recruitMarine(this);
+            return;
+        }
+        else if (this.corps == corps) {
+            System.out.println("Marine " + this.getName() + " is already part of " + this.corps.getBaseLoc() + "!\n");
+            return;
+        }
+
+        //re-assignment of Marine to corps from old assigned MarineCorps
+        this.corps.dischargeMarine(this); // discharges Marine from their current MarineCorps
+        corps.recruitMarine(this); // recruits this Marine to the passed MarineCorps
+
+    }
+
+    // GETTERS
+    /**
+     * Getter method for current rank of Marine object
+     * @return String
+     */
+    public String getRank() {
+        return this.rank;
+    }
+
+    /**
+     * Getter method for current assigned MarineCorps object of Marine object
+     * @return MarineCorps
+     */
+    public MarineCorps getCorps() {
+        return this.corps;
+    }
+
+    //SETTERS
+    /**
+     * Setter method for rank attribute of Marine
+     * @param rank Is the new String value to be assigned to the rank attribute
+     */
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    /**
+     * Setter method for corps attribute of Marine
+     * @param corps Is the new MarineCorps reference to be assigned to the corps attribute
+     */
+    public void setCorps(MarineCorps corps) {
+        this.corps = corps;
+    }
+
+}
