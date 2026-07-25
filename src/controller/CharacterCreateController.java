@@ -7,7 +7,7 @@ import view.CharacterCreateMenuView;
 public class CharacterCreateController {
 
     public CharacterCreateController(CharacterCreateMenuView view, Main mainApp) {
-        view.getPirateButton().setOnAction(e -> notYetImplemented());
+        view.getPirateButton().setOnAction(e -> mainApp.showPirateCreateMenu());
         view.getMarineButton().setOnAction(e -> notYetImplemented());
         view.getHunterButton().setOnAction(e -> notYetImplemented());
         view.getCivilianButton().setOnAction(e -> notYetImplemented());

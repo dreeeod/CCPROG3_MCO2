@@ -5,10 +5,12 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.SimulationList;
 import view.*;
 
 public class Main extends Application {
     private Stage stage;
+    private SimulationList sim = new SimulationList();
 
     public static void main(String[] args) {
         launch(args);
@@ -39,7 +41,12 @@ public class Main extends Application {
         new CharacterCreateController(view, this);
         setRoot(view);
     }
-
+    public void showPirateCreateMenu() {
+        PirateCreateView view = new PirateCreateView();
+        PirateCreateController controller = new PirateCreateController(view, this, sim);
+        controller.create(view, sim);
+        setRoot(view);
+    }
 
 
     // GROUP MENUS
