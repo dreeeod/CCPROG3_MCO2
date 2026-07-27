@@ -2,11 +2,20 @@ package model;
 
 import model.exceptions.DuplicateNameException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulationList {
+
+    // File Names for Data Storage
+    private static final String CHAR_FILE = "Character.txt";
+    private static final String GROUP_FILE = "Group.txt";
+    private static final String FRUIT_FILE = "DevilFruit.txt";
 
     private final List<Character> characters = new ArrayList<>();
     private final List<PirateCrew> crews = new ArrayList<>();
@@ -29,6 +38,30 @@ public class SimulationList {
             }
         }
     }
+
+//    public void readData() {
+//
+//    }
+//
+//    public void readDevilFruit() throws IOException {
+//        List<DevilFruit> list = new ArrayList<>();
+//        File file = new File(FRUIT_FILE);
+//        if (!file.exists()) {
+//            return;
+//        }
+//
+//        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                if (line.isBlank()) {
+//                    continue;
+//                }
+//
+//                String datas[] = line.split("\\|", -1);
+//
+//            }
+//        }
+//    }
 
     public List<Character> getCharacters() { return characters; }
     public List<PirateCrew> getCrews() { return crews; }

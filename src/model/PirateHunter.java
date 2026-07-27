@@ -65,4 +65,9 @@ public class PirateHunter extends Character{
         this.captures = captures;
     }
 
+    @Override
+    public String fileString() {
+        return "Hello";
+    }
+
 }

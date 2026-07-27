@@ -128,4 +128,9 @@ public class Marine extends Character{
         this.corps = corps;
     }
 
+    @Override
+    public String fileString() {
+        return "Hello";
+    }
+
 }

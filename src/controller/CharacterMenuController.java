@@ -8,7 +8,7 @@ public class CharacterMenuController {
 
     public CharacterMenuController(CharacterMenuView view, Main mainApp) {
         view.getCreateButton().setOnAction(e -> mainApp.showCharacterCreateMenu());
-        view.getViewButton().setOnAction(e -> notYetImplemented());
+        view.getViewButton().setOnAction(e -> mainApp.showCharacterProfileMenu());
         view.getModifyButton().setOnAction(e -> notYetImplemented());
         view.getDeleteButton().setOnAction(e -> notYetImplemented());
         view.getBackButton().setOnAction(e -> mainApp.showMainMenu());

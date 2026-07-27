@@ -1,6 +1,6 @@
 package model;
 
-public class Character {
+public abstract class Character {
 
     private int characterID;
     private String name, alias, origin, status;
@@ -179,5 +179,7 @@ public class Character {
 
         this.wallet = wallet;
     }
+
+    public abstract String fileString();
 
 }

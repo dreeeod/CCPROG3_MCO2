@@ -47,6 +47,14 @@ public class Main extends Application {
         controller.create(view, sim);
         setRoot(view);
     }
+    public void showCharacterProfileMenu() {
+        CharacterProfileMenuView view = new CharacterProfileMenuView();
+        new CharacterProfileController(view, this);
+        setRoot(view);
+    }
+    public void showPirateViewMenu() {
+
+    }
 
 
     // GROUP MENUS

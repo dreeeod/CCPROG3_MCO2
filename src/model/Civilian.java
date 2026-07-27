@@ -74,4 +74,9 @@ public class Civilian extends Character{
         this.residence = residence;
     }
 
+    @Override
+    public String fileString() {
+        return "Hello";
+    }
+
 }

@@ -143,4 +143,15 @@ public class Pirate extends Character{
 
         pirateCrew.addCrewMember(this);
     }
+
+    @Override
+    public String fileString() {
+        int fruitID;
+        if (getDevilFruitPower() == null) {
+
+        }
+
+        return "PIRATE|" + getCharacterID() + "|" + getName() + "|" + getAlias() + "|" + getOrigin() +
+                "|" + getStatus() + "|" + getDevilFruitPower().getFruitID() + "|";
+    }
 }
