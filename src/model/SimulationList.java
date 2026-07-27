@@ -31,6 +31,33 @@ public class SimulationList {
         return pirate;
     }
 
+    public Marine createMarine(String name, String alias, String origin, String status,
+                               double wallet, String rank) throws DuplicateNameException {
+        checkDuplicateName(name);
+        int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
+        Marine marine = new Marine(id, name, alias, origin, status, wallet, rank, null);
+        characters.add(marine);
+        return marine;
+    }
+
+    public PirateHunter createHunter(String name, String alias, String origin, String status,
+                                     double wallet, String style, int captures) throws DuplicateNameException {
+        checkDuplicateName(name);
+        int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
+        PirateHunter hunter = new PirateHunter(id, name, alias, origin, status, wallet, style, captures);
+        characters.add(hunter);
+        return hunter;
+    }
+
+    public Civilian createCivilian(String name, String alias, String origin, String status,
+                                   double wallet, String profession, String residence) throws DuplicateNameException {
+        checkDuplicateName(name);
+        int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
+        Civilian civilian = new Civilian(id, name, alias, origin, status, wallet, profession, residence);
+        characters.add(civilian);
+        return civilian;
+    }
+
     public void checkDuplicateName(String name) throws DuplicateNameException {
         for (Character c : characters) {
             if (c.getName().equalsIgnoreCase(name)) {
@@ -39,29 +66,6 @@ public class SimulationList {
         }
     }
 
-//    public void readData() {
-//
-//    }
-//
-//    public void readDevilFruit() throws IOException {
-//        List<DevilFruit> list = new ArrayList<>();
-//        File file = new File(FRUIT_FILE);
-//        if (!file.exists()) {
-//            return;
-//        }
-//
-//        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                if (line.isBlank()) {
-//                    continue;
-//                }
-//
-//                String datas[] = line.split("\\|", -1);
-//
-//            }
-//        }
-//    }
 
     public List<Character> getCharacters() { return characters; }
     public List<PirateCrew> getCrews() { return crews; }
