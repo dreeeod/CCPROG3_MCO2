@@ -1,5 +1,6 @@
 package view;
 
+import app.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import model.PirateCrew;
+import model.SimulationList;
 
 public class CharacterMenuView {
 
@@ -241,5 +244,127 @@ public class CharacterMenuView {
     public TextField getProfessionField() { return professionField; }
     public TextField getResidenceField() { return residenceField; }
     public Button getCreateCivilianButton() { return  createCivilianButton; }
+
+    /*
+        METHODS RELATED TO CHARACTER VIEWING
+    */
+    // View Character Specific GUI
+    private final ComboBox<String> typeBox = new ComboBox<>();
+    private final ComboBox<String> characterBox = new ComboBox<>();
+    private final Label profileLabel = new Label();
+
+    public Scene viewCharacterMenu() {
+        Scene scene;
+        VBox layout = new VBox();
+
+        typeBox.getItems().addAll("Pirate", "Marine", "Pirate Hunter", "Civilian");
+        typeBox.setPromptText("Select Character Type to View");
+        characterBox.setPromptText("Select Character");
+
+        layout.getChildren().addAll(
+                new Label("View a Character"),
+                new Label("Character Type:"), typeBox,
+                new Label("Character:"), characterBox,
+                backButton, messageLabel,
+                profileLabel
+        );
+        layout.setSpacing(8);
+        layout.setPadding(new Insets(20));
+
+        scene = new Scene(layout);
+
+        return scene;
+    }
+
+    public ComboBox<String> getTypeBox() { return typeBox; }
+    public ComboBox<String> getCharacterBox() { return characterBox; }
+    public Label getProfileLabel() { return profileLabel; }
+
+    /*
+        METHODS RELATED TO CHARACTER MODIFICATION
+    */
+    // Modify Character Specific GUI
+    private final Button modifyCharacterButton = new Button("Modify Character");
+
+    public Scene modifyCharacterMenu() {
+        Scene scene;
+        VBox layout = new VBox();
+
+        typeBox.getItems().addAll("Pirate", "Marine", "Pirate Hunter", "Civilian");
+        typeBox.setPromptText("Select Character Type to Modify");
+        characterBox.setPromptText("Select Character");
+
+        layout.getChildren().addAll(
+                new Label("Modify a Character"),
+                new Label("Character Type:"), typeBox,
+                new Label("Character:"), characterBox,
+                modifyCharacterButton, backButton, messageLabel
+        );
+        layout.setSpacing(8);
+        layout.setPadding(new Insets(20));
+
+        scene = new Scene(layout);
+
+        return scene;
+    }
+
+    public Button getModifyCharacterButton() { return modifyCharacterButton; }
+
+    //Modify Pirate Specific GUI
+    public ComboBox<String> actionBox = new ComboBox<>();
+    public Label modLabel = new Label();
+    public TextField modBounty = new TextField();
+    public ComboBox<String> modCrew = new ComboBox<>();
+
+    public void modifyPirateView(Main app, SimulationList data) {
+        VBox layout = (VBox) app.getMainStage().getScene().getRoot();
+        actionBox.getItems().addAll("Assign/Modify Bounty", "Assign/Modify Crew");
+        actionBox.setPromptText("Choose Action");
+
+        layout.getChildren().addAll(actionBox);
+
+        actionBox.setOnAction(e -> {
+            if (actionBox.getValue().equals("Assign/Modify Bounty")) {
+                layout.getChildren().remove(modCrew);
+                modLabel.setText("Input valid bounty");
+                layout.getChildren().addAll(modLabel, modBounty);
+            }
+            else if (actionBox.getValue().equals("Assign/Modify Crew")) {
+                layout.getChildren().remove(modBounty);
+                layout.getChildren().remove(modLabel);
+                modCrew.setPromptText("Choose Pirate Crew");
+                for (PirateCrew c : data.getCrews()) {
+                    modCrew.getItems().add(c.getCrewName());
+                }
+                layout.getChildren().addAll(modCrew);
+            }
+        });
+    }
+
+    /*
+        METHODS RELATED TO CHARACTER DELETION
+    */
+
+    public Scene deleteCharacterMenu() {
+        Scene scene;
+        VBox layout = new VBox();
+
+        typeBox.getItems().addAll("Pirate", "Marine", "Pirate Hunter", "Civilian");
+        typeBox.setPromptText("Select Character Type to Delete");
+        characterBox.setPromptText("Select Character");
+
+        layout.getChildren().addAll(
+                new Label("Delete a Character"),
+                new Label("Character Type:"), typeBox,
+                new Label("Character:"), characterBox,
+                backButton, messageLabel
+        );
+        layout.setSpacing(8);
+        layout.setPadding(new Insets(20));
+
+        scene = new Scene(layout);
+
+        return scene;
+    }
 
 }

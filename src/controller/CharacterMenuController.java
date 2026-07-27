@@ -4,15 +4,20 @@ import app.Main;
 import javafx.scene.control.Alert;
 import model.SimulationList;
 import model.exceptions.DuplicateNameException;
+import model.Character;
+import model.Pirate;
+import model.Marine;
+import model.PirateHunter;
+import model.Civilian;
 import view.CharacterMenuView;
 
 public class CharacterMenuController {
 
     public CharacterMenuController(CharacterMenuView view, Main app, SimulationList data) {
         view.getCreateButton().setOnAction(e -> implementCreateCharacter(view, app, data));
-        view.getViewButton().setOnAction(e -> notYetImplemented());
-        view.getModifyButton().setOnAction(e -> notYetImplemented());
-        view.getDeleteButton().setOnAction(e -> notYetImplemented());
+        view.getViewButton().setOnAction(e -> implementViewCharacter(view, app, data));
+        view.getModifyButton().setOnAction(e -> implementModifyCharacter(view, app, data));
+        view.getDeleteButton().setOnAction(e -> implementDeleteCharacter(view, app, data));
         view.getBackButton().setOnAction(e -> app.showMainMenu(app.getMainStage()));
     }
 
@@ -20,6 +25,9 @@ public class CharacterMenuController {
         new Alert(Alert.AlertType.INFORMATION, "This screen isn't built yet!").showAndWait();
     }
 
+    /*
+        METHODS FOR CHARACTER CREATION
+    */
     private void implementCreateCharacter(CharacterMenuView view, Main app, SimulationList data) {
         app.getMainStage().setScene(view.characterCreateMenu()); // sets the scene of the stage at Main to be that of the Character Create menu
 
@@ -27,7 +35,7 @@ public class CharacterMenuController {
         view.getMarineButton().setOnAction(e -> controlMarineCreate(view, app, data));
         view.getHunterButton().setOnAction(e -> controlHunterCreate(view, app, data));
         view.getCivilianButton().setOnAction(e -> controlCivilianCreate(view, app, data));
-        view.getBackButton().setOnAction(e -> app.showMainMenu(app.getMainStage()));
+        view.getBackButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
     }
 
     private void controlPirateCreate(CharacterMenuView view, Main app, SimulationList data) {
@@ -221,6 +229,204 @@ public class CharacterMenuController {
         }
         catch (DuplicateNameException ex) {
             view.getMessageLabel().setText(ex.getMessage());
+        }
+    }
+
+    /*
+        METHODS FOR CHARACTER VIEWING
+    */
+    private void implementViewCharacter(CharacterMenuView view, Main app, SimulationList data) {
+        app.getMainStage().setScene(view.viewCharacterMenu()); // sets the scene of the stage at Main to be that of the View Character menu
+
+        view.getTypeBox().setOnAction(e -> characterSelection(view, data));
+        view.getCharacterBox().setOnAction(e -> viewCharacter(view, data));
+        view.getBackButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
+    }
+
+    private void characterSelection(CharacterMenuView view, SimulationList data) {
+        String type = view.getTypeBox().getValue();
+        view.getCharacterBox().getItems().clear();
+
+        for (Character c : data.getCharacters()) {
+            if (type.equals("Pirate") && c instanceof Pirate) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+            else if (type.equals("Marine") && c instanceof Marine) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+            else if (type.equals("Pirate Hunter") && c instanceof PirateHunter) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+            else if (type.equals("Civlian") && c instanceof Civilian) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+        }
+
+        if (view.getCharacterBox().getItems().isEmpty()) {
+            view.getMessageLabel().setText("There are currently no characters of this type!");
+        }
+        else {
+            view.getMessageLabel().setText("");
+        }
+    }
+
+    private void viewCharacter(CharacterMenuView view, SimulationList data) {
+        String selectedName = view.getCharacterBox().getValue();
+
+        if (selectedName == null) {
+            view.getMessageLabel().setText("Please select a character to view!");
+            return;
+        }
+
+        for (Character c : data.getCharacters()) {
+            if (c.getName().equalsIgnoreCase(selectedName)) {
+                StringBuilder profile = new StringBuilder();
+
+                // Base Attributes
+                profile.append("XXX Character Profile XXX\n");
+                profile.append("ID          : ").append(c.getCharacterID()).append("\n");
+                profile.append("Name        : ").append(c.getName()).append("\n");
+                profile.append("Alias       : ").append(c.getAlias()).append("\n");
+                profile.append("Origin      : ").append(c.getOrigin()).append("\n");
+                profile.append("Status      : ").append(c.getStatus()).append("\n");
+                profile.append("Wallet      : ").append(c.getWallet()).append("\n");
+                profile.append("Devil Fruit : ").append(
+                        c.getDevilFruitPower() != null ? c.getDevilFruitPower().getName() : "None"
+                ).append("\n");
+
+                // Specific Attributes
+                if (c instanceof Pirate pirate) {
+                    profile.append("\nXXX Pirate Info XXX\n");
+                    profile.append("Bounty      : ").append(pirate.getBounty()).append(" Berries\n");
+                    profile.append("Role        : ").append(pirate.getPirateRole()).append("\n");
+                    profile.append("Captain     : ").append(pirate.getIsCaptain()).append("\n");
+                    profile.append("Crew        : ").append(
+                            pirate.getPirateCrew() != null ? pirate.getPirateCrew().getCrewName() : "None"
+                    ).append("\n");
+                }
+                else if (c instanceof Marine marine) {
+                    profile.append("\nXXX Marine Info XXX\n");
+                    profile.append("Rank        : ").append(marine.getRank()).append("\n");
+                    profile.append("Corps       : ").append(
+                            marine.getCorps() != null ? marine.getCorps().getBaseLoc() : "None"
+                    ).append("\n");
+                }
+                else if (c instanceof PirateHunter hunter) {
+                    profile.append("\nXXX Pirate Hunter Info XXX\n");
+                    profile.append("Style       : ").append(hunter.getStyle()).append("\n");
+                    profile.append("Captures    : ").append(hunter.getCaptures()).append("\n");
+                }
+                else if (c instanceof Civilian civilian) {
+                    profile.append("\nXXX Pirate Hunter Info XXX\n");
+                    profile.append("Profession  : ").append(civilian.getProfession()).append("\n");
+                    profile.append("Residence   : ").append(civilian.getResidence()).append("\n");
+                }
+
+                view.getProfileLabel().setText(profile.toString());
+                view.getMessageLabel().setText("");
+                return;
+            }
+        }
+    }
+
+    /*
+        METHODS FOR CHARACTER MODIFICATION
+    */
+    private void implementModifyCharacter(CharacterMenuView view, Main app, SimulationList data) {
+        app.getMainStage().setScene(view.modifyCharacterMenu()); // sets the scene of the stage at Main to be that of the Modify Character menu
+
+        view.getTypeBox().setOnAction(e -> characterModifySelection(view, app, data));
+        view.getModifyCharacterButton().setOnAction(e -> notYetImplemented());
+        view.getBackButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
+    }
+
+    private void characterModifySelection(CharacterMenuView view, Main app, SimulationList data) {
+        String type = view.getTypeBox().getValue();
+        view.getCharacterBox().getItems().clear();
+
+        for (Character c : data.getCharacters()) {
+            if (type.equals("Pirate") && c instanceof Pirate) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+            else if (type.equals("Marine") && c instanceof Marine) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+            else if (type.equals("Pirate Hunter") && c instanceof PirateHunter) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+            else if (type.equals("Civilian") && c instanceof Civilian) {
+                view.getCharacterBox().getItems().add(c.getName());
+            }
+        }
+
+        if (view.getCharacterBox().getItems().isEmpty()) {
+            view.getMessageLabel().setText("There are currently no characters of this type!");
+            return;
+        }
+
+        view.getMessageLabel().setText("");
+        if (type.equals("Pirate")) {
+            controlPirateModify(view, app, data);
+        }
+        else if (type.equals("Marine")) {
+
+        }
+        else if (type.equals("Pirate Hunter")) {
+
+        }
+        else if (type.equals("Civilian")) {
+
+        }
+
+    }
+
+    private void controlPirateModify(CharacterMenuView view, Main app, SimulationList data) {
+        view.modifyPirateView(app, data);
+        String selectedName = view.getCharacterBox().getValue();
+
+        if (selectedName == null) {
+            view.getMessageLabel().setText("Please select a pirate to modify!");
+            return;
+        }
+    }
+
+    /*
+        METHODS FOR CHARACTER DELETION
+    */
+    private void implementDeleteCharacter(CharacterMenuView view, Main app, SimulationList data) {
+        app.getMainStage().setScene(view.deleteCharacterMenu()); // sets the scene of the stage at Main to be that of the Delete Character menu
+
+        view.getTypeBox().setOnAction(e -> characterSelection(view, data));
+        view.getCharacterBox().setOnAction(e -> deleteCharacter(view, data));
+        view.getBackButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
+    }
+
+    private void deleteCharacter(CharacterMenuView view, SimulationList data) {
+        String selectedName = view.getCharacterBox().getValue();
+
+        if (selectedName == null) {
+            view.getMessageLabel().setText("Please select a character to view!");
+            return;
+        }
+
+        for (Character c : data.getCharacters()) {
+            if (c.getName().equalsIgnoreCase(selectedName)) {
+                if (c instanceof Pirate) {
+                    view.getMessageLabel().setText("Pirate " + c.getName() + " has been removed from the simulation!");
+                }
+                else if (c instanceof Marine) {
+                    view.getMessageLabel().setText("Marine " + c.getName() + " has been removed from the simulation!");
+                }
+                else if (c instanceof PirateHunter) {
+                    view.getMessageLabel().setText("Pirate Hunter " + c.getName() + " has been removed from the simulation!");
+                }
+                else if (c instanceof Civilian) {
+                    view.getMessageLabel().setText("Civilian " + c.getName() + " has been removed from the simulation!");
+                }
+
+                data.getCharacters().remove(c);
+                return;
+            }
         }
     }
 }
