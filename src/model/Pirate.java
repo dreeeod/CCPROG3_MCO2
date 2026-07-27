@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.NegativeValueException;
+
 public class Pirate extends Character{
     private long bounty;
     private String pirateRole;
@@ -121,18 +123,12 @@ public class Pirate extends Character{
      * Modifies the bounty of a pirate
      * @param bounty the new positive bounty value to be assigned to the Pirate
      */
-    public void assignModifyBounty(long bounty){
-
+    public void assignModifyBounty(long bounty) throws NegativeValueException {
         if(bounty < 0){
-
-            System.out.println("Bounty cannot be negative!\n");
+            throw new NegativeValueException("");
         }
-        else{
 
-            setBounty(bounty);
-            System.out.println(getName() + " Bounty updated to: " + bounty + " Berries!\n");
-
-        }
+        setBounty(bounty);
     }
 
     /**

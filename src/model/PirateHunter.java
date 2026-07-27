@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.NegativeValueException;
+
 public class PirateHunter extends Character{
 
     private String style;
@@ -61,7 +63,10 @@ public class PirateHunter extends Character{
      * Setter method for the capture attribute of PirateHunter object
      * @param captures Is the new int value to be assigned to the style attribute
      */
-    public void setCaptures(int captures) {
+    public void setCaptures(int captures) throws NegativeValueException {
+        if (captures < 0) {
+            throw new NegativeValueException("");
+        }
         this.captures = captures;
     }
 

@@ -1,7 +1,10 @@
 package model;
 
+import model.exceptions.LowRankException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Marine extends Character{
@@ -37,39 +40,20 @@ public class Marine extends Character{
 
     /**
      * Reassigns the rank of the Marine object that calls this method
-     * @param scanner Passed created Scanner object from main for input
+     * @param rank Passed chosen String object for rank
      */
-    public void promoteRank(Scanner scanner) {
-        ArrayList<Integer> range = new ArrayList<>();
-        int choice = 0;
-        String[] ranks = {"Fleet Admiral", "Admiral", "Vice-Admiral", "Rear Admiral", "Commodore", "Captain",
-                "Commander", "Ensign", "Warrant Officer", "Petty Officer", "Seaman", "Chore Boy"};
+    public void promoteRank(String rank) throws LowRankException {
+        List<String> ranks = new ArrayList<>(List.of("Fleet Admiral", "Admiral", "Vice-Admiral", "Rear Admiral", "Commodore", "Captain",
+                                            "Commander", "Ensign", "Warrant Officer", "Petty Officer", "Seaman", "Chore Boy"));
 
-        System.out.println(" --- Marine Rank Promotion --- ");
-        System.out.println("To what position will the Marine get promoted to?");
-        for (int i = 0; i < ranks.length; i++) {
-            System.out.println(i + " | " + ranks[i]);
-            range.add(i);
-        }
-        //choice = Helpers.validateInput(scanner, range);
+        int origRank = ranks.indexOf(this.rank);
+        int newRank = ranks.indexOf(rank);
 
-        int newInd = Arrays.asList(ranks).indexOf(ranks[choice]);
-        int oldInd = Arrays.asList(ranks).indexOf(this.rank);
-        while (newInd >= oldInd) { // a higher index means a lower rank, this method only allows promotion (meaning going up a rank)
-            if (newInd == oldInd) {
-                System.out.println("\nMarine " + this.getName() + " is already of rank " + this.rank + ". Please try again!");
-                //choice = Helpers.validateInput(scanner, range);
-                newInd = Arrays.asList(ranks).indexOf(ranks[choice]);
-            }
-            else if (newInd > oldInd) {
-                System.out.println("\nMarine " + this.getName() + " cannot go down a rank! Please try again!");
-                //choice = Helpers.validateInput(scanner, range);
-                newInd = Arrays.asList(ranks).indexOf(ranks[choice]);
-            }
+        if (newRank >= origRank) {
+            throw new LowRankException("");
         }
 
-        System.out.println("\nMarine " + this.getName() + " has successfully been promoted to the rank of '" + ranks[choice] + "'!\n");
-        this.rank = ranks[choice];
+        this.rank = rank;
 
     }
 
