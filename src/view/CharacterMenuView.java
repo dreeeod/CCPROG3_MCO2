@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import model.MarineCorps;
 import model.PirateCrew;
 import model.SimulationList;
 
@@ -310,9 +311,11 @@ public class CharacterMenuView {
 
     public Button getModifyCharacterButton() { return modifyCharacterButton; }
 
-    //Modify Pirate Specific GUI
+    // Universal Label and Action Box for Modifications
     public ComboBox<String> actionBox = new ComboBox<>();
     public Label modLabel = new Label();
+
+    //Modify Pirate Specific GUI
     public TextField modBounty = new TextField();
     public ComboBox<String> modCrew = new ComboBox<>();
 
@@ -326,8 +329,15 @@ public class CharacterMenuView {
         actionBox.setOnAction(e -> {
             if (actionBox.getValue().equals("Assign/Modify Bounty")) {
                 layout.getChildren().remove(modCrew);
+                layout.getChildren().remove(modLabel);
                 modLabel.setText("Input valid bounty");
                 layout.getChildren().addAll(modLabel, modBounty);
+            }
+            else if (actionBox.getValue().equals("Assign/Modify Crew") && data.getCrews().isEmpty()) {
+                layout.getChildren().remove(modBounty);
+                layout.getChildren().remove(modCrew);
+                modLabel.setText("There are currently no available Pirate Crews");
+                layout.getChildren().addAll(modLabel);
             }
             else if (actionBox.getValue().equals("Assign/Modify Crew")) {
                 layout.getChildren().remove(modBounty);
@@ -340,6 +350,111 @@ public class CharacterMenuView {
             }
         });
     }
+
+    public ComboBox<String> getActionBox() { return actionBox; }
+    public TextField getModBounty() { return modBounty; }
+    public ComboBox<String> getModCrew() { return modCrew; }
+
+    // Modify Marine Specific GUI
+    public ComboBox<String> modRank = new ComboBox<>();
+    public ComboBox<String> modCorp = new ComboBox<>();
+
+    public void modifyMarineView(Main app, SimulationList data) {
+        VBox layout = (VBox) app.getMainStage().getScene().getRoot();
+        actionBox.getItems().addAll("Promote Rank", "Assign/Modify Corps");
+        actionBox.setPromptText("Choose Action");
+        modRank.getItems().addAll("Fleet Admiral", "Admiral", "Vice-Admiral", "Rear Admiral", "Commodore", "Captain",
+                "Commander", "Ensign", "Warrant Officer", "Petty Officer", "Seaman", "Chore Boy");
+
+        layout.getChildren().addAll(actionBox);
+
+        actionBox.setOnAction(e -> {
+            if (actionBox.getValue().equals("Promote Rank")) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modCorp);
+                modRank.setPromptText("Choose Rank");
+                layout.getChildren().addAll(modRank);
+            }
+            else if (actionBox.getValue().equals("Assign/Modify Corps") && data.getCorps().isEmpty()) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modRank);
+                modLabel.setText("There are currently no available Marine Corps");
+                layout.getChildren().addAll(modLabel);
+            }
+            else if (actionBox.getValue().equals("Assign/Modify Corps")) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modRank);
+                modCorp.setPromptText("Choose Marine Corps");
+                for (MarineCorps c : data.getCorps()) {
+                    modCorp.getItems().add(c.getBaseLoc());
+                }
+                layout.getChildren().addAll(modCorp);
+            }
+        });
+    }
+
+    public ComboBox<String> getModCorp() { return modCorp; }
+    public ComboBox<String> getModRank() { return modRank; }
+
+    // Modify Pirate Hunter Specific GUI
+    public TextField modStyle = new TextField();
+    public TextField modCaptures = new TextField();
+
+    public void modifyHunterView(Main app, SimulationList data) {
+        VBox layout = (VBox) app.getMainStage().getScene().getRoot();
+        actionBox.getItems().addAll("Change Combat Style", "Change Amount of Captures");
+        actionBox.setPromptText("Choose Action");
+
+        layout.getChildren().addAll(actionBox);
+
+        actionBox.setOnAction(e -> {
+            if (actionBox.getValue().equals("Change Combat Style")) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modCaptures);
+                modLabel.setText("Input new Combat Style");
+                layout.getChildren().addAll(modLabel, modStyle);
+            }
+            else if (actionBox.getValue().equals("Change Amount of Captures")) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modStyle);
+                modLabel.setText("Input new Amount of Captures");
+                layout.getChildren().addAll(modLabel, modCaptures);
+            }
+        });
+    }
+
+    public TextField getModStyle() { return modStyle; }
+    public TextField getModCaptures() { return modCaptures; }
+
+    // Modify Civilian Specific GUI
+    public TextField modProfession = new TextField();
+    public TextField modResidence = new TextField();
+
+    public void modifyCivilianView(Main app, SimulationList data) {
+        VBox layout = (VBox) app.getMainStage().getScene().getRoot();
+        actionBox.getItems().addAll("Change Profession", "Change Residence");
+        actionBox.setPromptText("Choose Action");
+
+        layout.getChildren().addAll(actionBox);
+
+        actionBox.setOnAction(e -> {
+            if (actionBox.getValue().equals("Change Profession")) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modResidence);
+                modLabel.setText("Input new Profession");
+                layout.getChildren().addAll(modLabel, modProfession);
+            }
+            else if (actionBox.getValue().equals("Change Residence")) {
+                layout.getChildren().remove(modLabel);
+                layout.getChildren().remove(modProfession);
+                modLabel.setText("Input new Residence");
+                layout.getChildren().addAll(modLabel, modResidence);
+            }
+        });
+    }
+
+    public TextField getModProfession() { return modProfession; }
+    public TextField getModResidence() { return modResidence; }
 
     /*
         METHODS RELATED TO CHARACTER DELETION

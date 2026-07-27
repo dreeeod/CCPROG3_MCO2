@@ -1,14 +1,13 @@
 package controller;
 
 import app.Main;
+import com.sun.javafx.geom.PickRay;
 import javafx.scene.control.Alert;
-import model.SimulationList;
-import model.exceptions.DuplicateNameException;
+import model.*;
 import model.Character;
-import model.Pirate;
-import model.Marine;
-import model.PirateHunter;
-import model.Civilian;
+import model.exceptions.DuplicateNameException;
+import model.exceptions.LowRankException;
+import model.exceptions.NegativeValueException;
 import view.CharacterMenuView;
 
 public class CharacterMenuController {
@@ -257,7 +256,7 @@ public class CharacterMenuController {
             else if (type.equals("Pirate Hunter") && c instanceof PirateHunter) {
                 view.getCharacterBox().getItems().add(c.getName());
             }
-            else if (type.equals("Civlian") && c instanceof Civilian) {
+            else if (type.equals("Civilian") && c instanceof Civilian) {
                 view.getCharacterBox().getItems().add(c.getName());
             }
         }
@@ -336,7 +335,7 @@ public class CharacterMenuController {
         app.getMainStage().setScene(view.modifyCharacterMenu()); // sets the scene of the stage at Main to be that of the Modify Character menu
 
         view.getTypeBox().setOnAction(e -> characterModifySelection(view, app, data));
-        view.getModifyCharacterButton().setOnAction(e -> notYetImplemented());
+        view.getModifyCharacterButton().setOnAction(e -> controlCharacterModify(view, data));
         view.getBackButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
     }
 
@@ -366,27 +365,187 @@ public class CharacterMenuController {
 
         view.getMessageLabel().setText("");
         if (type.equals("Pirate")) {
-            controlPirateModify(view, app, data);
+            view.modifyPirateView(app, data);
         }
         else if (type.equals("Marine")) {
-
+            view.modifyMarineView(app, data);
         }
         else if (type.equals("Pirate Hunter")) {
-
+            view.modifyHunterView(app, data);
         }
         else if (type.equals("Civilian")) {
-
+            view.modifyCivilianView(app, data);
         }
 
     }
 
-    private void controlPirateModify(CharacterMenuView view, Main app, SimulationList data) {
-        view.modifyPirateView(app, data);
+    private void controlCharacterModify(CharacterMenuView view, SimulationList data) {
         String selectedName = view.getCharacterBox().getValue();
+        String selectedType = view.getTypeBox().getValue();
+        String selectedAction = view.getActionBox().getValue();
 
         if (selectedName == null) {
             view.getMessageLabel().setText("Please select a pirate to modify!");
             return;
+        }
+        if (selectedAction == null) {
+            view.getMessageLabel().setText("Please select a modification action!");
+            return;
+        }
+
+        if (selectedType.equals("Pirate")) {
+            Pirate pirate = new Pirate();
+            for (Character c : data.getCharacters()) {
+                if (c.getName().equalsIgnoreCase(selectedName)) {
+                    pirate = (Pirate) c;
+                    break;
+                }
+            }
+
+            switch (selectedAction) {
+                case "Assign/Modify Bounty" :
+                    long bounty;
+                    try {
+                        bounty = Long.parseLong(view.getModBounty().getText());
+                    }
+                    catch (NumberFormatException e) {
+                        view.getMessageLabel().setText("Bounty must be a valid number.");
+                        return;
+                    }
+                    try {
+                        pirate.assignModifyBounty(bounty);
+                    }
+                    catch (NegativeValueException e) {
+                        view.getMessageLabel().setText("Bounty must not be a negative number.");
+                        return;
+                    }
+                    view.getMessageLabel().setText("Successfully modified bounty to " + bounty + "!");
+                    break;
+                case "Assign/Modify Crew" :
+                    String crewName = view.getModCrew().getValue();
+                    for (PirateCrew p : data.getCrews()) {
+                        if (p.getCrewName().equalsIgnoreCase(crewName)) {
+                            pirate.assignToPirateCrew(p);
+                            break;
+                        }
+                    }
+                    view.getMessageLabel().setText("Successfully assigned to " + crewName + " Pirate Crew!");
+                    break;
+            }
+        }
+        else if (selectedType.equals("Marine")) {
+            Marine marine = new Marine();
+            for (Character c : data.getCharacters()) {
+                if (c.getName().equalsIgnoreCase(selectedName)) {
+                    marine = (Marine) c;
+                    break;
+                }
+            }
+
+            switch (selectedAction) {
+                case "Promote Rank" :
+                    String rank = view.getModRank().getValue();
+                    try {
+                        marine.promoteRank(rank);
+                    }
+                    catch (LowRankException e) {
+                        view.getMessageLabel().setText("New Rank must be higher than the original rank!");
+                        return;
+                    }
+                    view.getMessageLabel().setText("Successfully promoted rank to " + rank + "!");
+                    break;
+                case "Assign/Modify Corps" :
+                    String corpsName = view.getModCorp().getValue();
+                    for (MarineCorps m : data.getCorps()) {
+                        if (m.getBaseLoc().equalsIgnoreCase(corpsName)) {
+                            marine.assignMarineCorps(m);
+                            break;
+                        }
+                    }
+                    view.getMessageLabel().setText("Successfully assigned to " + corpsName + " Marine Corps!");
+                    break;
+            }
+        }
+        else if (selectedType.equals("Pirate Hunter")) {
+            PirateHunter hunter = new PirateHunter();
+            for (Character c : data.getCharacters()) {
+                if (c.getName().equalsIgnoreCase(selectedName)) {
+                    hunter = (PirateHunter) c;
+                    break;
+                }
+            }
+
+            switch (selectedAction) {
+                case "Change Combat Style" :
+                    String style = view.getModStyle().getText();
+                    if (style == null) {
+                        view.getMessageLabel().setText("Combat Style cannot be left as blank!");
+                        return;
+                    }
+                    if (style.equals(hunter.getStyle())) {
+                        view.getMessageLabel().setText("Please enter a new Combat Style!");
+                        return;
+                    }
+                    hunter.setStyle(style);
+                    view.getMessageLabel().setText("Successfully updated Combat Style to " + style + "!");
+                    break;
+                case "Change Amount of Captures" :
+                    int captures;
+                    try {
+                        captures = Integer.parseInt(view.getModCaptures().getText());
+                    }
+                    catch (NumberFormatException e) {
+                        view.getMessageLabel().setText("Captures must be a valid number.");
+                        return;
+                    }
+                    try {
+                        hunter.setCaptures(captures);
+                    }
+                    catch (NegativeValueException e) {
+                        view.getMessageLabel().setText("Captures must not be a negative number.");
+                        return;
+                    }
+                    view.getMessageLabel().setText("Successfully modified amount of captures to " + captures + "!");
+                    break;
+            }
+        }
+        else if (selectedType.equals("Civilian")) {
+            Civilian civilian = new Civilian();
+            for (Character c : data.getCharacters()) {
+                if (c.getName().equalsIgnoreCase(selectedName)) {
+                    civilian = (Civilian) c;
+                    break;
+                }
+            }
+
+            switch (selectedAction) {
+                case "Change Profession" :
+                    String profession = view.getModProfession().getText();
+                    if (profession == null) {
+                        view.getMessageLabel().setText("Profession cannot be left as blank!");
+                        return;
+                    }
+                    if (profession.equals(civilian.getProfession())) {
+                        view.getMessageLabel().setText("Please enter a new Profession!");
+                        return;
+                    }
+                    civilian.setProfession(profession);
+                    view.getMessageLabel().setText("Successfully updated Profession to " + profession + "!");
+                    break;
+                case "Change Residence" :
+                    String residence = view.getModResidence().getText();
+                    if (residence == null) {
+                        view.getMessageLabel().setText("Residence cannot be left as blank!");
+                        return;
+                    }
+                    if (residence.equals(civilian.getResidence())) {
+                        view.getMessageLabel().setText("Please enter a new Residence!");
+                        return;
+                    }
+                    civilian.setResidence(residence);
+                    view.getMessageLabel().setText("Successfully updated Residence to " + residence + "!");
+                    break;
+            }
         }
     }
 
