@@ -39,4 +39,13 @@ public class Main extends Application {
         return mainStage;
     }
 
+    public void showGroupMenu(Stage stage){
+
+        GroupMenuView view = new GroupMenuView();
+
+        new GroupMenuController(view, this, sim);
+
+        stage.setScene(view.mainGroupMenu());
+    }
+
 }
