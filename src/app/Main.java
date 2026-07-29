@@ -48,4 +48,11 @@ public class Main extends Application {
         stage.setScene(view.mainGroupMenu());
     }
 
+    public void showDevilFruitMenu(Stage stage){
+
+        DevilFruitMenuView view = new DevilFruitMenuView();
+        new DevilFruitMenuController(view, this, sim);
+        stage.setScene(view.mainDevilFruitMenu());
+    }
+
 }
