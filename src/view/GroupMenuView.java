@@ -14,7 +14,7 @@ public class GroupMenuView {
     private final Button viewButton = new Button("View Groups");
     private final Button modifyButton = new Button("Modify Group Attributes");
     private final Button addButton = new Button("Add Members to a Group");
-    private final Button removeButton = new Button("Remove Buttons from a Group");
+    private final Button removeButton = new Button("Remove Members from a Group");
     private final Button backButton = new Button("Back to Menu");
 
     //Shared
