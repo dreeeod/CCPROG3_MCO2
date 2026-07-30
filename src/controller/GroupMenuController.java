@@ -519,11 +519,34 @@ public class GroupMenuController {
         //Set add Members Scene
         app.getMainStage().setScene(view.addMembersView());
 
+        //When type is selected populate the group dropdown
         view.getAddGroupTypeBox().setOnAction(e -> {
 
             String type = view.getAddGroupTypeBox().getValue();
 
             view.getAddGroupBox().getItems().clear();
+            view.getAddMemberBox().getItems().clear();
+
+            if("Pirate Crew".equals(type)){
+
+                for(PirateCrew crew : data.getCrews()){
+
+                    view.getAddGroupBox().getItems().add(crew.getCrewName());
+                }
+            }
+            else{
+
+                for(MarineCorps corps: data.getCorps()){
+
+                    view.getAddGroupBox().getItems().add(corps.getBaseLoc());
+                }
+            }
+        });
+
+        //When group is selected populate the members dropdown
+        view.getAddGroupBox().setOnAction(e -> {
+
+            String type = view.getAddGroupTypeBox().getValue();
             view.getAddMemberBox().getItems().clear();
 
             if("Pirate Crew".equals(type)){
