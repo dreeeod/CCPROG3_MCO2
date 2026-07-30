@@ -23,7 +23,7 @@ public class Main extends Application {
 
     public void showMainMenu(Stage stage) {
         MainMenuView view = new MainMenuView();
-        new MainMenuController(view, this);
+        new MainMenuController(view, this, sim);
         stage.setScene(view.showMainMenu());
         stage.setWidth(1200);
         stage.setHeight(800);

@@ -3,6 +3,7 @@ package controller;
 import app.Main;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import model.SimulationList;
 import view.MainMenuView;
 
 public class MainMenuController {
@@ -12,12 +13,12 @@ public class MainMenuController {
      * @param view MainMenuView object used to access the buttons
      * @param app Main object from Main class used to access the Stage
      */
-    public MainMenuController(MainMenuView view, Main app) {
+    public MainMenuController(MainMenuView view, Main app, SimulationList data) {
         view.getCharacterButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
         view.getGroupButton().setOnAction(e -> app.showGroupMenu(app.getMainStage()));
         view.getDevilFruitButton().setOnAction(e -> notYetImplemented());
         view.getCaptureButton().setOnAction(e -> notYetImplemented());
-        view.getExitButton().setOnAction(e -> Platform.exit());
+        view.getExitButton().setOnAction(e -> data.saveData());
     }
 
     private void notYetImplemented() {
