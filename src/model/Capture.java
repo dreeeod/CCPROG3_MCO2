@@ -51,6 +51,22 @@ public class Capture {
         this.captureState = captureState;
     }
 
+    public int getCaptID() {
+        return captID;
+    }
+
+    public Pirate getCaptured() {
+        return captured;
+    }
+
+    public Character getCaptor() {
+        return captor;
+    }
+
+    public String getCaptureState() {
+        return captureState;
+    }
+
     /**
      * Method for validating if the captor is not a Pirate. Throws an exception otherwise
      * @param captor Character object to be checked if it is also a Pirate object

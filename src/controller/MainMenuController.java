@@ -17,7 +17,7 @@ public class MainMenuController {
         view.getCharacterButton().setOnAction(e -> app.showCharacterMenu(app.getMainStage()));
         view.getGroupButton().setOnAction(e -> app.showGroupMenu(app.getMainStage()));
         view.getDevilFruitButton().setOnAction(e -> app.showDevilFruitMenu(app.getMainStage()));
-        view.getCaptureButton().setOnAction(e -> notYetImplemented());
+        view.getCaptureButton().setOnAction(e -> app.showCaptureMenu(app.getMainStage()));
         view.getExitButton().setOnAction(e -> data.saveData());
     }
 

@@ -56,4 +56,11 @@ public class Main extends Application {
         stage.setScene(view.mainDevilFruitMenu());
     }
 
+    public void showCaptureMenu(Stage stage){
+
+        CaptureMenuView view = new CaptureMenuView();
+        new CaptureMenuController(view, this, sim);
+        stage.setScene(view.mainCaptureMenu());
+    }
+
 }
