@@ -104,7 +104,6 @@ public class MarineCorps {
             if (this.commander == null) { // automatically assigns that member as a commander if the spot is vacant (null)
                 this.setCommander(member);
                 members.add(member);
-                System.out.println("\nMarine " + member.getName() + " has been assigned as the top commander of this corps!\n");
                 member.setCorps(this);
                 return;
             }
@@ -112,25 +111,15 @@ public class MarineCorps {
             int memInd = Arrays.asList(commanderRanks).indexOf(member.getRank());
             int commInd = Arrays.asList(commanderRanks).indexOf(getCommander().getRank());
             if (memInd < commInd) {
-                System.out.println("\nMarine " + commander.getName() + " stepped down from being the top commander!\n");
                 this.setCommander(member);
                 members.add(member);
-                System.out.println("\nMarine " + member.getName() + " has been assigned as the new top commander of this corps!\n");
                 member.setCorps(this);
                 return;
             }
         }
 
-        // checks if member is already part of the member list (will still execute if member's commander rank is lower)
-        if (this.members.contains(member)) {
-            System.out.println("Marine " + member.getName() + " is already part of " + this.baseLoc);
-            return;
-        }
-        else {
-            members.add(member);
-            member.setCorps(this);// double check this
-            System.out.println("Marine " + member.getName() + " is now assigned to " + this.getBaseLoc() + "!\n");
-        }
+        members.add(member);
+        member.setCorps(this);// double check this
 
     }
 
@@ -139,21 +128,11 @@ public class MarineCorps {
      * @param member Marine object to be removed from List<Marine> members
      */
     public void dischargeMarine(Marine member) {
-        String[] commanderRanks = {"Fleet Admiral", "Admiral", "Vice-Admiral", "Rear Admiral", "Commodore", "Captain",
-                "Commander"};
         if (member == this.getCommander()) {
             this.setCommander(null);
-            System.out.println("Marine " + member.getName() + " has stepped down from being the commander! The position is now open!\n");
         }
-
-        if (!this.members.contains(member)) {
-            System.out.println("Marine " + member.getName() + " is currently not part part of " + this.baseLoc + "\n");
-        }
-        else {
-            this.members.remove(member);
-            member.setCorps(null); // removes corps assignment in member
-            System.out.println("Marine " + member.getName() + " has been discharged from " + this.baseLoc + "\n");
-        }
+        this.members.remove(member);
+        member.setCorps(null); // removes corps assignment in member
     }
 
     /**
@@ -177,6 +156,21 @@ public class MarineCorps {
         }
 
         return high;
+    }
+
+    public String fileString() {
+        String commanderID = "NONE";
+        if (getCommander() != null) {
+            commanderID = String.valueOf(getCommander().getCharacterID());
+        }
+
+        StringBuilder builder = new StringBuilder("MARINECORPS|"+getCorpsID()+"|"+getBaseLoc()+"|"+commanderID+"|"+getFunds());
+
+        for (Marine m : members) {
+            builder.append("|"+m.getCharacterID());
+        }
+
+        return builder.toString();
     }
 
 }

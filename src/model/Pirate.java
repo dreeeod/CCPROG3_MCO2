@@ -26,7 +26,6 @@ public class Pirate extends Character{
         this.bounty = bounty;
         this.pirateRole = pirateRole;
     }
-
     /**
      * Second constructor method for Pirate class with no input parameters
      */
@@ -136,18 +135,23 @@ public class Pirate extends Character{
      * @param pirateCrew The PirateCrew object that the Pirate will be assigned to
      */
     public void assignToPirateCrew(PirateCrew pirateCrew){
-
+        if (this.crew != null){
+            this.getPirateCrew().removeCrewMember(this);
+        }
         pirateCrew.addCrewMember(this);
     }
 
     @Override
     public String fileString() {
-        int fruitID;
-        if (getDevilFruitPower() == null) {
-
+        String fruitID = "NONE", crewID = "NONE";
+        if (getDevilFruitPower() != null) { // gets Devil Fruit's ID
+            fruitID = String.valueOf(getDevilFruitPower().getFruitID());
         }
-
+        if (this.crew != null) { // get Pirate Crew's ID
+            crewID = String.valueOf(this.crew.getCrewID());
+        }
         return "PIRATE|" + getCharacterID() + "|" + getName() + "|" + getAlias() + "|" + getOrigin() +
-                "|" + getStatus() + "|" + getDevilFruitPower().getFruitID() + "|";
+                "|" + getStatus() + "|" + fruitID + "|" + getWallet() + "|" + getBounty() + "|" + getPirateRole()
+                + "|" + crewID + "|" + this.isCaptain;
     }
 }

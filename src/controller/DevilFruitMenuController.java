@@ -160,7 +160,7 @@ public class DevilFruitMenuController {
                     sb.append("\n");
 
                     // loops through all past owners
-                    for(Character c : data.getCharacters()){
+                    for(Character c : fruit.getHistory()){
 
                         sb.append("  - ").append(c.getName()).append("\n");
                     }

@@ -72,7 +72,13 @@ public class PirateHunter extends Character{
 
     @Override
     public String fileString() {
-        return "Hello";
+        String fruitID = "NONE";
+        if (getDevilFruitPower() != null) { // gets Devil Fruit's ID
+            fruitID = String.valueOf(getDevilFruitPower().getFruitID());
+        }
+
+        return "PIRATEHUNTER|" + getCharacterID() + "|" + getName() + "|" + getAlias() + "|" + getOrigin() +
+                "|" + getStatus() + "|" + fruitID + "|" + getStyle() + "|" + getCaptures();
     }
 
 }

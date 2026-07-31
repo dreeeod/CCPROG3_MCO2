@@ -63,19 +63,11 @@ public class Marine extends Character{
      * @param corps Is the MarineCorps object to be assigned as this Marine object's MarineCorps
      */
     public void assignMarineCorps(MarineCorps corps) {
-        if (this.corps == null) {
-            corps.recruitMarine(this);
-            return;
+        if (this.corps != null) {
+            this.getCorps().dischargeMarine(this);
         }
-        else if (this.corps == corps) {
-            System.out.println("Marine " + this.getName() + " is already part of " + this.corps.getBaseLoc() + "!\n");
-            return;
-        }
-
         //re-assignment of Marine to corps from old assigned MarineCorps
-        this.corps.dischargeMarine(this); // discharges Marine from their current MarineCorps
-        corps.recruitMarine(this); // recruits this Marine to the passed MarineCorps
-
+        corps.recruitMarine(this); // discharges Marine from their current MarineCorps
     }
 
     // GETTERS
@@ -114,7 +106,16 @@ public class Marine extends Character{
 
     @Override
     public String fileString() {
-        return "Hello";
+        String fruitID = "NONE", corpsID = "NONE";
+        if (getDevilFruitPower() != null) { // gets Devil Fruit's ID
+            fruitID = String.valueOf(getDevilFruitPower().getFruitID());
+        }
+        if (this.corps != null) { // get Pirate Crew's ID
+            corpsID = String.valueOf(this.corps.getCorpsID());
+        }
+
+        return "MARINE|" + getCharacterID() + "|" + getName() + "|" + getAlias() + "|" + getOrigin() +
+                "|" + getStatus() + "|" + fruitID + "|" + getWallet() + "|" + getRank() + "|" + corpsID;
     }
 
 }

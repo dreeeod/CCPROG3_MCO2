@@ -164,4 +164,19 @@ public class DevilFruit {
 
     }
 
+    public String fileString() {
+        String ownerID = "NONE";
+        if (getOwner() != null) {
+            ownerID = String.valueOf(getOwner().getCharacterID());
+        }
+
+        StringBuilder builder = new StringBuilder(getFruitID()+"|"+getName()+"|"+getCategory()+"|"+getAbilityDescription()+"|"+ownerID);
+
+        for (Character c : history) {
+            builder.append("|"+c.getCharacterID());
+        }
+
+        return builder.toString();
+    }
+
 }

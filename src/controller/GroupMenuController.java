@@ -246,10 +246,16 @@ public class GroupMenuController {
                     sb.append("Total Bounty : ").append(crew.getTotalCrewBounty()).append(" Berries\n");
                     sb.append("Members      : ").append(crew.getCrewMembers().size()).append("\n");
 
-                    for(Pirate p : crew.getCrewMembers()){
+                    if (!crew.getCrewMembers().isEmpty()) {
+                        for(Pirate p : crew.getCrewMembers()){
 
-                        sb.append("  - ").append(p.getName()).append(" (").append(p.getPirateRole()).append(")\n");
+                            sb.append("  - ").append(p.getName()).append(" (").append(p.getPirateRole()).append(")\n");
+                        }
                     }
+                    else {
+                        sb.append("No Members");
+                    }
+
 
                     break;
                 }
@@ -268,9 +274,14 @@ public class GroupMenuController {
                     sb.append("Funds        : ").append(corps.getFunds()).append(" Berries\n");
                     sb.append("Members      : ").append(corps.getMembers().size()).append("\n");
 
-                    for(Marine marine : corps.getMembers()){
+                    if (!corps.getMembers().isEmpty()) {
+                        for(Marine marine : corps.getMembers()){
 
-                        sb.append("  - ").append(marine.getName()).append(" (").append(marine.getRank()).append(")\n");
+                            sb.append("  - ").append(marine.getName()).append(" (").append(marine.getRank()).append(")\n");
+                        }
+                    }
+                    else {
+                        sb.append("No Members");
                     }
 
                     break;

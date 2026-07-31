@@ -570,11 +570,17 @@ public class CharacterMenuController {
 
         for (Character c : data.getCharacters()) {
             if (c.getName().equalsIgnoreCase(selectedName)) {
-                if (c instanceof Pirate) {
+                if (c instanceof Pirate p) {
                     view.getMessageLabel().setText("Pirate " + c.getName() + " has been removed from the simulation!");
+                    if (p.getPirateCrew() != null) {
+                        p.getPirateCrew().removeCrewMember(p);
+                    }
                 }
-                else if (c instanceof Marine) {
+                else if (c instanceof Marine m) {
                     view.getMessageLabel().setText("Marine " + c.getName() + " has been removed from the simulation!");
+                    if (m.getCorps() != null) {
+                        m.getCorps().dischargeMarine(m);
+                    }
                 }
                 else if (c instanceof PirateHunter) {
                     view.getMessageLabel().setText("Pirate Hunter " + c.getName() + " has been removed from the simulation!");
@@ -583,7 +589,12 @@ public class CharacterMenuController {
                     view.getMessageLabel().setText("Civilian " + c.getName() + " has been removed from the simulation!");
                 }
 
+                c.setStatus("Dead");
+                if (c.getDevilFruitPower() != null) {
+                    c.getDevilFruitPower().triggerReincarnation();
+                }
                 data.getCharacters().remove(c);
+                data.getDeleted().add(c);
                 return;
             }
         }

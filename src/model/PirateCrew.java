@@ -33,9 +33,7 @@ public class PirateCrew {
      * @return int
      */
     public int getCrewID(){
-
         return crewID;
-
     }
 
     /**
@@ -43,7 +41,6 @@ public class PirateCrew {
      * @return String
      */
     public String getCrewName(){
-
         return crewName;
     }
 
@@ -52,7 +49,6 @@ public class PirateCrew {
      * @return String
      */
     public String getShipName(){
-
         return shipName;
     }
 
@@ -61,7 +57,6 @@ public class PirateCrew {
      * @return
      */
     public Pirate getCaptain(){
-
         return captain;
     }
 
@@ -70,7 +65,6 @@ public class PirateCrew {
      * @return ArrayList<Pirate>
      */
     public ArrayList<Pirate> getCrewMembers(){
-
         return crewMembers;
     }
 
@@ -81,7 +75,6 @@ public class PirateCrew {
      * @param crewName Is the new String value to be assigned to the crewName attribute
      */
     public void setCrewName(String crewName){
-
         this.crewName = crewName;
     }
 
@@ -90,7 +83,6 @@ public class PirateCrew {
      * @param shipName Is the new String value to be assigned to the shipName attribute
      */
     public void setShipName(String shipName){
-
         this.shipName = shipName;
     }
 
@@ -99,8 +91,11 @@ public class PirateCrew {
      * @param captain Is the new Pirate reference to be assigned to the captain attribute
      */
     public void setCaptain(Pirate captain){
-
         this.captain = captain;
+    }
+
+    public void setTotalBounty(long bounty) {
+        this.totalBounty = bounty;
     }
 
     //Methods
@@ -109,19 +104,9 @@ public class PirateCrew {
      * @param pirate the pirate object to be added to the crew
      */
     public void addCrewMember(Pirate pirate){
-
-        if(pirate.getPirateCrew() != null){
-
-            System.out.println(pirate.getName() + " is already part of a pirate crew!\n");
-            return;
-        }
-        else{
-
-            crewMembers.add(pirate);
-            totalBounty += pirate.getBounty(); // adds Pirate's bounty to Pirate Crew's total bounty
-            pirate.setPirateCrew(this);
-            System.out.println(pirate.getName() + " has joined the " + crewName + "!\n");
-        }
+        crewMembers.add(pirate);
+        totalBounty += pirate.getBounty(); // adds Pirate's bounty to Pirate Crew's total bounty
+        pirate.setPirateCrew(this);
     }
 
     /**
@@ -129,19 +114,14 @@ public class PirateCrew {
      * @param pirate The Pirate object to be removed from the crew
      */
     public void removeCrewMember(Pirate pirate){
-
-        if(!crewMembers.contains(pirate)){
-
-            System.out.println(pirate.getName() + " is not part of this crew!\n");
-            return;
+        totalBounty -= pirate.getBounty(); // removes Pirate's bounty to Pirate Crew's total bounty
+        if (pirate.getIsCaptain()) {
+            pirate.setIsCaptain(false);
+            pirate.setPirateRole("Crew Member");
+            this.captain = null;
         }
-        else{
-
-            totalBounty -= pirate.getBounty(); // removes Pirate's bounty to Pirate Crew's total bounty
-            crewMembers.remove(pirate);
-            pirate.setPirateCrew(null);
-            System.out.println(pirate.getName() + " has been removed from the " + crewName + "!\n");
-        }
+        crewMembers.remove(pirate);
+        pirate.setPirateCrew(null);
     }
 
     /**
@@ -149,26 +129,17 @@ public class PirateCrew {
      * @param newCaptain The Pirate object to be assigned as the new captain
      */
     public void assignCaptain(Pirate newCaptain){
-
-        if(!crewMembers.contains(newCaptain)) {
-            System.out.println(newCaptain.getName() + " is not part of this crew!\n");
-            return;
+        //Demote current captain if he exists
+        if(this.captain != null){
+            this.captain.setPirateRole(newCaptain.getPirateRole()); // switch roles
+            this.captain.setIsCaptain(false);
         }
-        else{
 
-            //Demote current captain if he exists
-            if(this.captain != null){
-                this.captain.setPirateRole("Crew Member"); // default role
-                this.captain.setIsCaptain(false);
-            }
-
-            //Promote new Captain
-            newCaptain.setIsCaptain(true);
-            newCaptain.setPirateRole("Captain");
-            //store as Pirate object
-            this.captain = newCaptain;
-            System.out.println(newCaptain.getName() + " is now the new captain of " + crewName + "!\n");
-        }
+        //Promote new Captain
+        newCaptain.setIsCaptain(true);
+        newCaptain.setPirateRole("Captain");
+        //store as Pirate object
+        this.captain = newCaptain;
     }
 
     /**
@@ -176,12 +147,29 @@ public class PirateCrew {
      * @return long
      */
     public long getTotalCrewBounty(){
-        long currentTotal = 0;
-        for (Pirate p : crewMembers) {
-            currentTotal += p.getBounty();
-        }
-        this.totalBounty = currentTotal;
+//        long currentTotal = 0;
+//        if (!crewMembers.isEmpty()) {
+//            for (Pirate p : crewMembers) {
+//                currentTotal += p.getBounty();
+//            }
+//        }
+//        this.totalBounty = currentTotal;
         return totalBounty;
+    }
+
+    public String fileString() {
+        String captainID = "NONE";
+        if (getCaptain() != null) {
+            captainID = String.valueOf(getCaptain().getCharacterID());
+        }
+
+        StringBuilder builder = new StringBuilder("PIRATECREW|"+getCrewID()+"|"+getCrewName()+"|"+getShipName()+"|"+captainID+"|"+getTotalCrewBounty());
+
+        for (Pirate p : crewMembers) {
+            builder.append("|"+p.getCharacterID());
+        }
+
+        return builder.toString();
     }
 
 }

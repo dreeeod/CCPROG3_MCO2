@@ -8,9 +8,10 @@ import view.*;
 
 public class Main extends Application {
     private Stage mainStage;
-    private SimulationList sim = new SimulationList();
+    private static SimulationList sim = new SimulationList();
 
     public static void main(String[] args) {
+        sim.loadData();
         launch(args);
     }
 
