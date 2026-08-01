@@ -26,6 +26,7 @@ public class SimulationList {
     private static final String DELETE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Deleted.txt";
     private static final String GROUP_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Group.txt";
     private static final String FRUIT_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/DevilFruit.txt";
+    private static final String CAPTURE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Capture.txt";
 
     private List<String[]> charDevID = new ArrayList<>(); // per array, 0 is Character ID, 1 is DevilFruit ID (if there is one)
     private List<String[]> memberCrewID = new ArrayList<>(); // per array, 0 is Pirate ID, 1 is PirateCrew ID (if there is one)
@@ -36,6 +37,7 @@ public class SimulationList {
     private final List<PirateCrew> crews = new ArrayList<>();
     private final List<MarineCorps> corps = new ArrayList<>();
     private final List<DevilFruit> fruits = new ArrayList<>();
+    private final List<Capture> captures = new ArrayList<>();
 
     public void createPirate(String name, String alias, String origin, String status,
                                double wallet, long bounty, String role) throws DuplicateNameException {
@@ -122,6 +124,16 @@ public class SimulationList {
             System.out.println("Something went wrong");
         }
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CAPTURE_FILE))) {
+            for (Capture a : captures) {
+                writer.write(a.fileString());
+                writer.newLine();
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Something went wrong");
+        }
+
         Platform.exit();
     }
 
@@ -134,6 +146,8 @@ public class SimulationList {
         loadFruit();
         // Load Groups
         loadGroup();
+        // Load Captures
+        loadCaptures();
     }
 
     public void loadCharacter() {
@@ -319,6 +333,38 @@ public class SimulationList {
         }
     }
 
+    public void loadCaptures() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(CAPTURE_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.isBlank()) {
+                    continue;
+                }
+
+                String[] a = line.split("\\|", -1);
+                Pirate captured = (Pirate) getCharByID(Integer.parseInt(a[1]));
+                Character captor = getCharByID(Integer.parseInt(a[2]));
+                Capture capture = null;
+
+                if (captor instanceof Marine m) {
+                    capture = new Capture(Integer.parseInt(a[0]), captured, m, a[3]);
+                }
+                else if (captor instanceof PirateHunter h) {
+                    capture = new Capture(Integer.parseInt(a[0]), captured, h, a[3]);
+                }
+                else if (captor instanceof Civilian v) {
+                    capture = new Capture(Integer.parseInt(a[0]), captured, v, a[3]);
+                }
+
+                captures.add(capture);
+
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Something went wrong");
+        }
+    }
+
     public Character getCharByID(int ID) {
         for (Character c : characters) {
             if (c.getCharacterID() == ID)
@@ -337,4 +383,5 @@ public class SimulationList {
     public List<PirateCrew> getCrews() { return crews; }
     public List<MarineCorps> getCorps() { return corps; }
     public List<DevilFruit> getFruits() { return fruits; }
+    public List<Capture> getCaptures() { return captures; }
 }

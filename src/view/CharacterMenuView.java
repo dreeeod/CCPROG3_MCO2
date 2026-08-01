@@ -117,7 +117,7 @@ public class CharacterMenuView {
         Scene scene;
         VBox layout = new VBox();
 
-        statusBox.getItems().addAll("Alive", "Captured", "Dead");
+        statusBox.getItems().addAll("Free", "Captured", "Dead");
         roleBox.getItems().addAll("Captain", "First Mate", "Second Mate", "Boatswain", "Cook",
                 "Doctor", "Navigator", "Shipwright", "Sniper", "Archaeologist");
 
@@ -153,7 +153,7 @@ public class CharacterMenuView {
         Scene scene;
         VBox layout = new VBox();
 
-        statusBox.getItems().addAll("Alive", "Captured", "Dead");
+        statusBox.getItems().addAll("Free", "Captured", "Dead");
         rankBox.getItems().addAll("Fleet Admiral", "Admiral", "Vice-Admiral", "Rear Admiral", "Commodore", "Captain",
                 "Commander", "Ensign", "Warrant Officer", "Petty Officer", "Seaman", "Chore Boy");
 
@@ -187,7 +187,7 @@ public class CharacterMenuView {
         Scene scene;
         VBox layout = new VBox();
 
-        statusBox.getItems().addAll("Alive", "Captured", "Dead");
+        statusBox.getItems().addAll("Free", "Captured", "Dead");
 
         layout.getChildren().addAll(
                 new Label("Create a Pirate Hunter"),
@@ -221,7 +221,7 @@ public class CharacterMenuView {
         Scene scene;
         VBox layout = new VBox();
 
-        statusBox.getItems().addAll("Alive", "Captured", "Dead");
+        statusBox.getItems().addAll("Free", "Captured", "Dead");
 
         layout.getChildren().addAll(
                 new Label("Create a Civlian"),

@@ -92,6 +92,9 @@ public class Capture {
 
         // handles the distribution of funds to the wallets/fund (for MarineCorps)
         routeFinancialRewards();
+        if (this.captured.getPirateCrew() != null && this.captureState.equals("Dead")) {
+            this.captured.getPirateCrew().removeCrewMember(this.captured);
+        }
 
         // puts the captured entity into a Devil Fruit's list of owners if they are captured as Dead
         if (this.captor.getStatus().equals("Dead") && this.captor.getDevilFruitPower() != null) {
@@ -121,6 +124,13 @@ public class Capture {
             addBounty += this.captor.getWallet();
             this.captor.setWallet(addBounty);
         }
+
+        if (this.captured.getPirateCrew() != null && this.captured.getStatus().equals("Captured")) {
+            addBounty = this.getCaptured().getPirateCrew().getTotalCrewBounty();
+            addBounty -= this.getCaptured().getBounty();
+            long bounty = (long) addBounty;
+            this.getCaptured().getPirateCrew().setTotalBounty(bounty);
+        }
     }
     /**
      * Method responsible for logging the Capture object to the global list of created Captures
@@ -128,6 +138,10 @@ public class Capture {
      */
     public void logTransaction(List<Capture> captures) {
         captures.add(this);
+    }
+
+    public String fileString() {
+        return this.captID + "|" + this.captured.getCharacterID() + "|" + this.captor.getCharacterID() + "|" + this.captureState;
     }
 
 }
