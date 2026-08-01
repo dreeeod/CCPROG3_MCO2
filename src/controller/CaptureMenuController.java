@@ -276,7 +276,7 @@ public class CaptureMenuController {
         }
 
         //view button calls viewCaptureDetail
-        view.getViewCaptureLogButton().setOnAction(e -> viewCaptureDetails(view, data));
+        view.getConfirmViewLogButton().setOnAction(e -> viewCaptureDetails(view, data));
 
         //Back button returns to the capture menu
         view.getBackButton().setOnAction(e -> app.showCaptureMenu(app.getMainStage()));
