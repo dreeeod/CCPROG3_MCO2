@@ -10,7 +10,7 @@ public class MarineCorps {
     String baseLoc;
     Marine commander;
     List<Marine> members;
-    private double funds;
+    private long funds;
 
     /**
      * Constructor method for MarineCorps class with input parameters
@@ -19,7 +19,7 @@ public class MarineCorps {
      * @param commander Is the value to be assigned to commander attribute
      * @param funds Is the value to be assigned to funds attribute
      */
-    public MarineCorps(int id, String baseLoc, Marine commander, double funds) {
+    public MarineCorps(int id, String baseLoc, Marine commander, long funds) {
         corpsID = id;
         this.baseLoc = baseLoc;
         this.commander = commander;
@@ -87,7 +87,7 @@ public class MarineCorps {
      * Setter method for funds value of MarineCorps object
      * @param funds double value to be assigned to funds
      */
-    public void setFunds(double funds){
+    public void setFunds(long funds){
         this.funds = funds;
     }
 

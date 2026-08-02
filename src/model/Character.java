@@ -5,7 +5,7 @@ public abstract class Character {
     private int characterID;
     private String name, alias, origin, status;
     DevilFruit devilFruitPower;
-    private double wallet;
+    private long wallet;
 
     //Constructor
 
@@ -18,7 +18,7 @@ public abstract class Character {
      * @param status Is the value to be assigned to status attribute
      * @param wallet Is the value to be assigned to wallet attribute
      */
-    public Character(int characterID, String name, String alias, String origin, String status, double wallet){
+    public Character(int characterID, String name, String alias, String origin, String status, long wallet){
 
         this.characterID = characterID;
         this.name = name;
@@ -104,7 +104,7 @@ public abstract class Character {
      * Getter method for current wallet of Character object
      * @return double
      */
-    public double getWallet(){
+    public long getWallet(){
 
         return wallet;
     }
@@ -175,7 +175,7 @@ public abstract class Character {
      * Setter method for the walled attribute of character
      * @param wallet it is the new double value to be assigned to wallet attribute
      */
-    public void setWallet(double wallet){
+    public void setWallet(long wallet){
 
         this.wallet = wallet;
     }

@@ -18,7 +18,7 @@ public class Civilian extends Character{
      * @param profession Is the value to be assigned to profession attribute
      * @param residence Is the value to be assigned to residence attribute
      */
-    public Civilian(int characterID, String name, String alias, String origin, String status, double wallet, String profession, String residence){
+    public Civilian(int characterID, String name, String alias, String origin, String status, long wallet, String profession, String residence){
 
         super(characterID, name, alias, origin, status, wallet);
 

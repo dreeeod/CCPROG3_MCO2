@@ -18,7 +18,7 @@ public class CaptureMenuController {
     public CaptureMenuController(CaptureMenuView view, Main app, SimulationList data){
 
         //perform capture button goes to the perform capture screen
-        view.getPerformCaptureButton().setOnAction(e ->  implementPerfromCapture(view, app, data));
+        view.getPerformCaptureButton().setOnAction(e ->  implementPerformCapture(view, app, data));
         //view log button goes to the view capture log screen
         view.getViewCaptureLogButton().setOnAction(e -> implementViewingLog(view, app, data));
         //back button returns to main menu
@@ -30,7 +30,7 @@ public class CaptureMenuController {
 
     //Sets up the perform capture screen and populates the target and captor dropdowns
 
-    public void implementPerfromCapture(CaptureMenuView view, Main app, SimulationList data){
+    public void implementPerformCapture(CaptureMenuView view, Main app, SimulationList data){
 
         //Sets scene to perform capture
         app.getMainStage().setScene(view.performCaptureView());

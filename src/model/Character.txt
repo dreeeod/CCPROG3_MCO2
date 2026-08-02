@@ -1,6 +1,1 @@
-PIRATE|96433347|Luffy|Pirate King|Blue Seas|Captured|NONE|1000.0|300|Captain|29178656|true
-PIRATE|43927951|Hiccup|Dragon Master|Berk|Dead|NONE|1000.0|300|First Mate|NONE|false
-PIRATE|24819937|Nami|Waver|Blue Seas|Captured|NONE|1000.0|300|Navigator|29178656|false
-MARINE|74741565|Dagur|The Deranged|Berserker Island|Free|NONE|1000.0|Vice-Admiral|62792847
-MARINE|49126545|Heather|Windshear|Berserker Island|Free|NONE|1300.0|Rear Admiral|NONE
-PIRATEHUNTER|31742654|Viggo|Grimborn|Hunter Island|Free|NONE|1300.0|Flaming Sword|1
+

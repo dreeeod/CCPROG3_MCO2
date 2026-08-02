@@ -23,7 +23,7 @@ public class Marine extends Character{
      * @param rank Is the value to be assigned to rank attribute
      * @param corps Is the value to be assigned to corps attribute
      */
-    public Marine (int id, String name, String alias, String origin, String status, double wallet, String rank, MarineCorps corps) {
+    public Marine (int id, String name, String alias, String origin, String status, long wallet, String rank, MarineCorps corps) {
         super(id, name, alias, origin, status, wallet);
         this.rank = rank;
         this.corps = corps;

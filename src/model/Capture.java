@@ -109,8 +109,8 @@ public class Capture {
         }
 
         // puts the captured entity into a Devil Fruit's list of owners if they are captured as Dead
-        if (this.captor.getStatus().equals("Dead") && this.captor.getDevilFruitPower() != null) {
-            this.captor.getDevilFruitPower().triggerReincarnation();
+        if (this.captured.getStatus().equals("Dead") && this.captured.getDevilFruitPower() != null) {
+            this.captured.getDevilFruitPower().triggerReincarnation();
         }
     }
     /**
@@ -118,7 +118,7 @@ public class Capture {
      * or its MarineCorps' funds if it is part of one
      */
     public void routeFinancialRewards() {
-        double addBounty;
+        long addBounty;
         if (this.captor instanceof Marine marine) {
             if (marine.getCorps() == null) {
                 addBounty = this.captured.getBounty();
@@ -140,7 +140,7 @@ public class Capture {
         if (this.captured.getPirateCrew() != null && this.captured.getStatus().equals("Captured")) {
             addBounty = this.getCaptured().getPirateCrew().getTotalCrewBounty();
             addBounty -= this.getCaptured().getBounty();
-            long bounty = (long) addBounty;
+            long bounty = addBounty;
             this.getCaptured().getPirateCrew().setTotalBounty(bounty);
         }
     }

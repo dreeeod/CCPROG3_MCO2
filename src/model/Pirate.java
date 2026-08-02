@@ -19,7 +19,7 @@ public class Pirate extends Character{
      * @param bounty Is the value to be assigned to bounty attribute
      * @param pirateRole Is the value to be assigned to pirateRole attribute
      */
-    public Pirate(int characterID, String name, String alias, String origin, String status, double wallet, long bounty, String pirateRole){
+    public Pirate(int characterID, String name, String alias, String origin, String status, long wallet, long bounty, String pirateRole){
 
         super(characterID, name, alias, origin, status, wallet);
 

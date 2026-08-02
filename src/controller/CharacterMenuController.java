@@ -56,10 +56,10 @@ public class CharacterMenuController {
             return;
         }
 
-        double wallet;
+        long wallet;
         long bounty;
         try {
-            wallet = Double.parseDouble(view.getWalletField().getText());
+            wallet = Long.parseLong(view.getWalletField().getText());
             bounty = Long.parseLong(view.getBountyField().getText());
         }
         catch (NumberFormatException ex) {
@@ -105,9 +105,9 @@ public class CharacterMenuController {
             return;
         }
 
-        double wallet;
+        long wallet;
         try {
-            wallet = Double.parseDouble(view.getWalletField().getText());
+            wallet = Long.parseLong(view.getWalletField().getText());
         }
         catch (NumberFormatException ex) {
             view.getMessageLabel().setText("Wallet must be a valid number.");
@@ -151,10 +151,10 @@ public class CharacterMenuController {
             return;
         }
 
-        double wallet;
+        long wallet;
         int captures;
         try {
-            wallet = Double.parseDouble(view.getWalletField().getText());
+            wallet = Long.parseLong(view.getWalletField().getText());
             captures = Integer.parseInt(view.getCapturesField().getText());
         }
         catch (NumberFormatException ex) {
@@ -202,9 +202,9 @@ public class CharacterMenuController {
             return;
         }
 
-        double wallet;
+        long wallet;
         try {
-            wallet = Double.parseDouble(view.getWalletField().getText());
+            wallet = Long.parseLong(view.getWalletField().getText());
         }
         catch (NumberFormatException ex) {
             view.getMessageLabel().setText("Wallet must be a valid number.");
@@ -344,16 +344,16 @@ public class CharacterMenuController {
         view.getCharacterBox().getItems().clear();
 
         for (Character c : data.getCharacters()) {
-            if (type.equals("Pirate") && c instanceof Pirate) {
+            if (type.equals("Pirate") && c instanceof Pirate && !((c.getStatus().equals("Dead")) || (c.getStatus().equals("Captured")))) {
                 view.getCharacterBox().getItems().add(c.getName());
             }
-            else if (type.equals("Marine") && c instanceof Marine) {
+            else if (type.equals("Marine") && c instanceof Marine && !((c.getStatus().equals("Dead")) || (c.getStatus().equals("Captured")))) {
                 view.getCharacterBox().getItems().add(c.getName());
             }
-            else if (type.equals("Pirate Hunter") && c instanceof PirateHunter) {
+            else if (type.equals("Pirate Hunter") && c instanceof PirateHunter && !((c.getStatus().equals("Dead")) || (c.getStatus().equals("Captured")))) {
                 view.getCharacterBox().getItems().add(c.getName());
             }
-            else if (type.equals("Civilian") && c instanceof Civilian) {
+            else if (type.equals("Civilian") && c instanceof Civilian && !((c.getStatus().equals("Dead")) || (c.getStatus().equals("Captured")))) {
                 view.getCharacterBox().getItems().add(c.getName());
             }
         }

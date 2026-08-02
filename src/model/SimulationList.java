@@ -32,7 +32,7 @@ public class SimulationList {
     private final List<Capture> captures = new ArrayList<>();
 
     public void createPirate(String name, String alias, String origin, String status,
-                               double wallet, long bounty, String role) throws DuplicateNameException {
+                               long wallet, long bounty, String role) throws DuplicateNameException {
         checkDuplicateName(name);
         int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
         Pirate pirate = new Pirate(id, name, alias, origin, status, wallet, bounty, role);
@@ -40,7 +40,7 @@ public class SimulationList {
     }
 
     public void createMarine(String name, String alias, String origin, String status,
-                               double wallet, String rank) throws DuplicateNameException {
+                               long wallet, String rank) throws DuplicateNameException {
         checkDuplicateName(name);
         int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
         Marine marine = new Marine(id, name, alias, origin, status, wallet, rank, null);
@@ -48,7 +48,7 @@ public class SimulationList {
     }
 
     public void createHunter(String name, String alias, String origin, String status,
-                                     double wallet, String style, int captures) throws DuplicateNameException {
+                                     long wallet, String style, int captures) throws DuplicateNameException {
         checkDuplicateName(name);
         int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
         PirateHunter hunter = new PirateHunter(id, name, alias, origin, status, wallet, style, captures);
@@ -56,7 +56,7 @@ public class SimulationList {
     }
 
     public void createCivilian(String name, String alias, String origin, String status,
-                                   double wallet, String profession, String residence) throws DuplicateNameException {
+                                   long wallet, String profession, String residence) throws DuplicateNameException {
         checkDuplicateName(name);
         int id = ThreadLocalRandom.current().nextInt(10_000_000, 100_000_000);
         Civilian civilian = new Civilian(id, name, alias, origin, status, wallet, profession, residence);
@@ -172,20 +172,20 @@ public class SimulationList {
 
                 switch (c[0]) {
                     case "PIRATE":
-                        Pirate pirate = new Pirate(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), Long.parseLong(c[8]), c[9]);
+                        Pirate pirate = new Pirate(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), Long.parseLong(c[8]), c[9]);
                         pirate.setIsCaptain(Boolean.parseBoolean(c[11]));
                         characters.add(pirate);
                         break;
                     case "MARINE":
-                        Marine marine = new Marine(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), c[8], null);
+                        Marine marine = new Marine(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), c[8], null);
                         characters.add(marine);
                         break;
                     case "PIRATEHUNTER":
-                        PirateHunter hunter = new PirateHunter(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), c[8], Integer.parseInt(c[9]));
+                        PirateHunter hunter = new PirateHunter(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), c[8], Integer.parseInt(c[9]));
                         characters.add(hunter);
                         break;
                     case "CIVILIAN":
-                        Civilian civilian = new Civilian(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), c[8], c[9]);
+                        Civilian civilian = new Civilian(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), c[8], c[9]);
                         characters.add(civilian);
                         break;
                 }
@@ -208,20 +208,20 @@ public class SimulationList {
 
                 switch (c[0]) {
                     case "PIRATE":
-                        Pirate pirate = new Pirate(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), Long.parseLong(c[8]), c[9]);
+                        Pirate pirate = new Pirate(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), Long.parseLong(c[8]), c[9]);
                         pirate.setIsCaptain(Boolean.parseBoolean(c[11]));
                         deleted.add(pirate);
                         break;
                     case "MARINE":
-                        Marine marine = new Marine(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), c[8], null);
+                        Marine marine = new Marine(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), c[8], null);
                         deleted.add(marine);
                         break;
                     case "PIRATEHUNTER":
-                        PirateHunter hunter = new PirateHunter(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), c[8], Integer.parseInt(c[9]));
+                        PirateHunter hunter = new PirateHunter(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), c[8], Integer.parseInt(c[9]));
                         deleted.add(hunter);
                         break;
                     case "CIVILIAN":
-                        Civilian civilian = new Civilian(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Double.parseDouble(c[7]), c[8], c[9]);
+                        Civilian civilian = new Civilian(Integer.parseInt(c[1]), c[2], c[3], c[4], c[5], Long.parseLong(c[7]), c[8], c[9]);
                         deleted.add(civilian);
                         break;
                 }
@@ -305,7 +305,7 @@ public class SimulationList {
                             commander = (Marine) getCharByID(Integer.parseInt(g[3]));
                         }
 
-                        MarineCorps corp = new MarineCorps(Integer.parseInt(g[1]), g[2], commander, Double.parseDouble(g[4]));
+                        MarineCorps corp = new MarineCorps(Integer.parseInt(g[1]), g[2], commander, Long.parseLong(g[4]));
 
                         if (g.length > 5) {
                             for (int j = 5; j < g.length; j++) {

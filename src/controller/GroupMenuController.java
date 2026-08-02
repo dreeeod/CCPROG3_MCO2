@@ -127,11 +127,11 @@ public class GroupMenuController {
                 return;
             }
 
-            double funds;
+            long funds;
 
             try{
 
-                funds = Double.parseDouble(fundsText);
+                funds = Long.parseLong(fundsText);
             }
             catch(NumberFormatException ex){
 
@@ -344,12 +344,18 @@ public class GroupMenuController {
 
             if(isCommander){
 
+                String groupName = view.getEditGroupBox().getValue();
+
                 view.getEditCommanderBox().getItems().clear();
-                for (Character c : data.getCharacters()) {
 
-                    if (c instanceof Marine){
+                for(MarineCorps corps : data.getCorps()){
 
-                        view.getEditCommanderBox().getItems().add(c.getName());
+                    if(corps.getBaseLoc().equals(groupName)){
+
+                        for (Marine m : corps.getMembers()) {
+
+                            view.getEditCommanderBox().getItems().add(m.getName());
+                        }
                     }
                 }
             }
@@ -501,7 +507,7 @@ public class GroupMenuController {
 
                             try{
 
-                                double funds = Double.parseDouble(view.getEditValueAttribute().getText());
+                                long funds = Long.parseLong(view.getEditValueAttribute().getText());
                                 if (funds < 0){
 
                                     view.getMessageLabel().setText("Funds cannot be negative.");
@@ -564,7 +570,7 @@ public class GroupMenuController {
 
                 for(Character c : data.getCharacters()){
 
-                    if(c instanceof Pirate p && p.getPirateCrew() == null){
+                    if(c instanceof Pirate p && p.getPirateCrew() == null && !(p.getStatus().equals("Dead") || p.getStatus().equals("Captured"))){
 
                         view.getAddMemberBox().getItems().add(c.getName());
                     }
@@ -574,7 +580,7 @@ public class GroupMenuController {
 
                 for(Character c : data.getCharacters()){
 
-                    if(c instanceof Marine m && m.getCorps() == null){
+                    if(c instanceof Marine m && m.getCorps() == null && !(m.getStatus().equals("Dead") || m.getStatus().equals("Captured"))){
 
                         view.getAddMemberBox().getItems().add(c.getName());
                     }
@@ -608,6 +614,11 @@ public class GroupMenuController {
                     for(Character c : data.getCharacters()){
 
                         if(c.getName().equals(member) && c instanceof Pirate p){
+
+                            if(p.getPirateRole().equals("Captain") && crew.getCaptain() != null){
+
+                                p.setPirateRole("Crew Member");
+                            }
 
                             crew.addCrewMember(p);
 

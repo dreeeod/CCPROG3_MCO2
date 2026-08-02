@@ -18,7 +18,7 @@ public class PirateHunter extends Character{
      * @param style Is the value to be assigned to style attribute
      * @param captures Is the value to be assigned to captures attribute
      */
-    public PirateHunter(int id, String name, String alias, String origin, String status, double wallet, String style, int captures) {
+    public PirateHunter(int id, String name, String alias, String origin, String status, long wallet, String style, int captures) {
         super(id, name, alias, origin, status, wallet);
         this.style = style;
         this.captures = captures;
