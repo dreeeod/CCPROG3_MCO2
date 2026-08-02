@@ -298,7 +298,7 @@ public class GroupMenuView {
     //Add Members Scene
     public Scene addMembersView(){
 
-        addGroupTypeBox.getItems().setAll("Pirate Crew", "Marine Crew");
+        addGroupTypeBox.getItems().setAll("Pirate Crew", "Marine Corps");
         addGroupTypeBox.setPromptText("Select Group Type");
         addGroupBox.setPromptText("Select Group");
         addMemberBox.setPromptText("Select Member to Add");
