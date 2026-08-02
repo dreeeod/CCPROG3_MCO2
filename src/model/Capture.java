@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.IllegalCaptorException;
+import model.exceptions.NegativeValueException;
 
 import java.util.List;
 
@@ -94,6 +95,17 @@ public class Capture {
         routeFinancialRewards();
         if (this.captured.getPirateCrew() != null && this.captureState.equals("Dead")) {
             this.captured.getPirateCrew().removeCrewMember(this.captured);
+        }
+
+        if (this.captor instanceof PirateHunter h) {
+            int captures = h.getCaptures();
+            captures += 1;
+            try {
+                h.setCaptures(captures);
+            }
+            catch (NegativeValueException e) {
+                return;
+            }
         }
 
         // puts the captured entity into a Devil Fruit's list of owners if they are captured as Dead
