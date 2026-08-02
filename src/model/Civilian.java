@@ -82,7 +82,7 @@ public class Civilian extends Character{
         }
 
         return "PIRATEHUNTER|" + getCharacterID() + "|" + getName() + "|" + getAlias() + "|" + getOrigin() +
-                "|" + getStatus() + "|" + fruitID + "|" + getProfession() + "|" + getResidence();
+                "|" + getStatus() + "|" + fruitID + "|" + getWallet() + "|" + getProfession() + "|" + getResidence();
     }
 
 }

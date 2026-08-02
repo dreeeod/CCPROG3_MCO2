@@ -78,7 +78,7 @@ public class PirateHunter extends Character{
         }
 
         return "PIRATEHUNTER|" + getCharacterID() + "|" + getName() + "|" + getAlias() + "|" + getOrigin() +
-                "|" + getStatus() + "|" + fruitID + "|" + getStyle() + "|" + getCaptures();
+                "|" + getStatus() + "|" + fruitID + "|" + getWallet() + "|" + getStyle() + "|" + getCaptures();
     }
 
 }
