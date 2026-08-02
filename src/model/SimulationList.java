@@ -11,22 +11,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulationList {
 
-//    String user = System.getProperty("user.home");
-//    Path dirPath = Path.of(user, "mco", "src", "model");
-//    Path charFilePath = dirPath.resolve("Character.txt");
-//    Path groupFilePath = dirPath.resolve("Group.txt");
-//    Path fruitFilePath = dirPath.resolve("DevilFruit.txt");
-//
-//    File charFile = new File("Character.txt");
-//    File groupFile = new File("Group.txt");
-//    File fruitFile = new File("Devil.txt");
-
     // File Names for Data Storage
-    private static final String CHAR_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Character.txt";
-    private static final String DELETE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Deleted.txt";
-    private static final String GROUP_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Group.txt";
-    private static final String FRUIT_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/DevilFruit.txt";
-    private static final String CAPTURE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Capture.txt";
+    private static final Path DIR_PATH = Path.of(System.getProperty("user.dir"), "src", "model");
+
+    private static final String CHAR_FILE = DIR_PATH.resolve("Character.txt").toString();
+    private static final String DELETE_FILE = DIR_PATH.resolve("Deleted.txt").toString();
+    private static final String GROUP_FILE = DIR_PATH.resolve("Group.txt").toString();
+    private static final String FRUIT_FILE = DIR_PATH.resolve("DevilFruit.txt").toString();
+    private static final String CAPTURE_FILE = DIR_PATH.resolve("Capture.txt").toString();
+//    private static final String CHAR_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Character.txt";
+//    private static final String DELETE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Deleted.txt";
+//    private static final String GROUP_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Group.txt";
+//    private static final String FRUIT_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/DevilFruit.txt";
+//    private static final String CAPTURE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Capture.txt";
 
     private List<String[]> charDevID = new ArrayList<>(); // per array, 0 is Character ID, 1 is DevilFruit ID (if there is one)
     private List<String[]> memberCrewID = new ArrayList<>(); // per array, 0 is Pirate ID, 1 is PirateCrew ID (if there is one)
