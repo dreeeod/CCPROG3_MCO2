@@ -307,11 +307,11 @@ public class CaptureMenuController {
                 StringBuilder sb = new StringBuilder();
 
                 sb.append("XXX Capture Details XXX\n");
-                sb.append("Capture ID   :").append(capture.getCaptID()).append("\n");
-                sb.append("Captured     :").append(capture.getCaptured().getName()).append("\n");
-                sb.append("Captor       : ").append(capture.getCaptor().getName()).append("\n");
-                sb.append("Capture State:").append(capture.getCaptureState()).append("\n");
-                sb.append("Target Status: ").append(capture.getCaptured().getStatus()).append("\n");
+                sb.append("Capture ID    : ").append(capture.getCaptID()).append("\n");
+                sb.append("Captured      : ").append(capture.getCaptured().getName()).append("\n");
+                sb.append("Captor        : ").append(capture.getCaptor().getName()).append("\n");
+                sb.append("Capture State : ").append(capture.getCaptureState()).append("\n");
+                sb.append("Target Status : ").append(capture.getCaptured().getStatus()).append("\n");
 
                 //displays the built detail in the label
                 view.getCaptureDetailLabel().setText(sb.toString());
