@@ -19,11 +19,6 @@ public class SimulationList {
     private static final String GROUP_FILE = DIR_PATH.resolve("Group.txt").toString();
     private static final String FRUIT_FILE = DIR_PATH.resolve("DevilFruit.txt").toString();
     private static final String CAPTURE_FILE = DIR_PATH.resolve("Capture.txt").toString();
-//    private static final String CHAR_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Character.txt";
-//    private static final String DELETE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Deleted.txt";
-//    private static final String GROUP_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Group.txt";
-//    private static final String FRUIT_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/DevilFruit.txt";
-//    private static final String CAPTURE_FILE = "/Users/andre/Desktop/Y1-T3/PROG3_MCO/mco_2/src/model/Capture.txt";
 
     private List<String[]> charDevID = new ArrayList<>(); // per array, 0 is Character ID, 1 is DevilFruit ID (if there is one)
     private List<String[]> memberCrewID = new ArrayList<>(); // per array, 0 is Pirate ID, 1 is PirateCrew ID (if there is one)
